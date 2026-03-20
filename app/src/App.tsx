@@ -1,11 +1,11 @@
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { BrowserRouter } from 'react-router';
 import { Routers } from './routers';
 
 function App() {
- 
+
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       <ToastContainer />
       <Routers />
     </BrowserRouter>
