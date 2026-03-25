@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 
 export function Register() {
 
@@ -6,14 +6,30 @@ export function Register() {
     const isPending = false;
 
     return (
+        <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
         <Container maxWidth="xs">
-            <Box sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
+            <Paper 
+            elevation={0}
+            sx={{
+            p: {xs: 3, sm: 4},
+                borderRadius: 3,
+                animation: 'fadeIn 0.5s',
+                "@keyframes fadeIn": {
+                    from: { opacity: 0, transform: "scale(0.95)" },
+                    to: { opacity: 1, transform: "scale(1)" }
+                }
             }}>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5"
+                sx={{
+                    fontWeight: 700, 
+                    color: "primary.main",
+                    textAlign: "center",
+                    mb: 3
+                }}>
                     Registre sua conta
                 </Typography>
 
@@ -31,6 +47,7 @@ export function Register() {
                         required
                         fullWidth
                         label="Nome de Usuário"
+                        autoFocus
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                     ></TextField>
@@ -62,7 +79,9 @@ export function Register() {
                     {isPending ? "Registrando..." : "Registrar"}
                     </Button>
                 </Box>
-            </Box>
+            </Paper>
         </Container>
+    </Box>
+    
     )
 }

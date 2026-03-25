@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import { Headset, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
-import { CardFeature } from "../components/Layout/CardFeature";
+import { CardFeature } from "../components/CardFeature";
 
 export function Home() {
 
@@ -28,7 +28,8 @@ export function Home() {
                 borderRadius: 4,
                 textAlign: "center",
                 mb: 6,
-                border: "1px solid #333333"
+                border: "1px solid",
+                borderColor: "divider",
             }}>
                 <Typography variant="h2" component="h1" 
                     sx={{
@@ -53,7 +54,8 @@ export function Home() {
                     px:4,
                     py: 1.5,
                     fontSize: "1.1rem",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    color: "primary.contrastText",
                 }}>
                     Explorar Livros
                 </Button>

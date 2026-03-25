@@ -1,0 +1,36 @@
+import { Box, Button, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router";
+
+export function UserAuthenticationActions() {
+
+    const isAuthenticated = false;
+    const userName = "Heloisa";
+    
+    if(isAuthenticated) {
+        return (
+            <Box sx={{display: 'flex', alignItems: 'center', gap: 2, ml: 2}}>
+                <Typography variant="body2"
+                sx={{display: {xs: 'none', md: 'block'}}}
+                    > Olá, <strong>{userName}</strong>!
+                </Typography>
+                <Button 
+                color="secondary" 
+                variant="contained" 
+                size="small" 
+                onClick={()=>{
+                        console.log("Usuário deslogado");
+                }}>Sair
+                </Button>
+            </Box>
+        );
+    }
+
+    return (
+        <Box sx={{display: 'flex', gap: 1, ml: 2}}>
+            <Button color="inherit" variant="outlined" component={RouterLink} to="/login">Entrar</Button>
+            <Button color="secondary" variant="contained" component={RouterLink} 
+            to="/register">Registrar</Button>
+        </Box>
+    );
+
+}
