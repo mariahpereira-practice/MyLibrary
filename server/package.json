@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "my-store-server",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -15,9 +15,9 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.40.0",
-    "@strapi/plugin-users-permissions": "5.40.0",
-    "@strapi/strapi": "5.40.0",
+    "@strapi/plugin-cloud": "5.39.0",
+    "@strapi/plugin-users-permissions": "5.39.0",
+    "@strapi/strapi": "5.39.0",
     "better-sqlite3": "12.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -35,7 +35,7 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "84010a57-3188-49ff-b71b-86a67198a344",
-    "installId": "9006e42ac33e3a0eb47057bd5b93daff21acd9edd4a1d88aa41de61c04f6eee8"
+    "uuid": "9b0f19ed-7944-4acd-a27a-9765fcfcc550",
+    "installId": "55a30d1c761228bd82c859e73276d387c5920e9ed17375245a3d5da77cb7c5c5"
   }
 }
