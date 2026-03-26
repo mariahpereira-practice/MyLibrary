@@ -1,6 +1,8 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
-import { Headset, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
+import { Box, Button, Grid, Icon, Paper, Typography } from "@mui/material";
+import { Cat, CatIcon, Headset, PawPrint, PawPrintIcon, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
 import { CardFeature } from "../components/CardFeature";
+import { useNavigate } from "react-router";
+import { CatPawPrint } from "../components/CatPawPrint";
 
 export function Home() {
 
@@ -20,36 +22,58 @@ export function Home() {
         description: "Nossa equipe de suporte está pronta para ajudar você a qualquer momento."
     }
 ]
+
+    const navigate = useNavigate();
     return (
         <Box>
             <Paper elevation={1}
             sx={{
-                p: {xs: 4, md: 8, lg: 12},
+                p: { xs: 4, md: 8, lg: 12 },
                 borderRadius: 4,
                 textAlign: "center",
                 mb: 6,
-                border: "1px solid",
-                borderColor: "divider",
+                mx: "auto",
+                width: "100%",
+                maxWidth:'100%',
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                transition: 'transform 0.3s ease',
+                zIndex: 0,
+                "&:hover": {
+                    transform: "translateY(-10px)",
+                    zIndex: 2,
+                }
             }}>
                 <Typography variant="h2" component="h1" 
                     sx={{
                         fontWeight: 800,
                         color: "primary.main",
                         mb: 2,
-                        fontSize: {xs: "2.5rem", md: "3.75rem", lg: "4.5rem"}
+                        fontSize: {xs: "2.5rem", md: "3.75rem", lg: "4.5rem"},
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 3
                     }}>
-                    Minha Livraria
-                </Typography>
+                    Miau Livraria
+                    <Cat size={150}></Cat>
+                </Typography>            
                 <Typography variant="h5" color="text.secondary" sx={{
                     mb:4,
-                    maxWidth: "700px",
+                    maxWidth: "900px",
                     mx: "auto"
                 }}>
-                    A livraria online que oferece uma vasta seleção de livros para todos os gostos. Encontre seu próximo livro favorito conosco!
+                    A livraria online que oferece uma vasta seleção de livros para todos os gostos. <br />
+                    Encontre seu próximo livro favorito conosco! Miau!
                 </Typography>
                 <Button variant="contained" size="large" 
                 startIcon={<ShoppingBag />}
-                onClick={() => {}}
+                onClick={() => navigate("/books")}
                 sx={{
                     px:4,
                     py: 1.5,
@@ -60,6 +84,7 @@ export function Home() {
                     Explorar Livros
                 </Button>
             </Paper>
+            <CatPawPrint />
             <Grid container spacing={4}>
                 {features.map((feature, index) => (
                     <Grid sx={{

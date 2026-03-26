@@ -12,7 +12,7 @@ export function Layout() {
       }}>
         <Header />
         <Box component="main" sx={{ flexGrow: 1, py: 4 }}>
-            <Container maxWidth="lg">
+            <Container maxWidth={false} sx={{ px: { xs: 4, md: 12 } }}>
                 <Outlet />
             </Container>
         </Box>

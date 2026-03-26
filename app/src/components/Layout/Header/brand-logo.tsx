@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { Book } from "lucide-react";
+import { Book, Cat } from "lucide-react";
 import {Link as RouterLink} from "react-router";
 
 function BrandLogo() {
@@ -16,7 +16,8 @@ function BrandLogo() {
         mr: {md: 4}
     }}>
     <Book size={25}/>
-      Minha Livraria
+      Miau Livraria
+    <Cat size={25}/>
     </Typography>
   );
 }

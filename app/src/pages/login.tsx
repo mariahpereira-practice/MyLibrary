@@ -1,13 +1,19 @@
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { CatPawPrint } from "../components/CatPawPrint";
 
 export function Login() {
   return (
-    <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }}>
-        <Container maxWidth="xs">
+    <Box>
+        <CatPawPrint />
+        <Container 
+            maxWidth="lg"
+            sx={{
+                minHeight: '75vh',
+                display: 'flex',
+                justifyContent: 'center',
+                px: { xs: 4, md: 12 }
+            }}
+        >
             <Paper
             elevation={0}
             sx={{
