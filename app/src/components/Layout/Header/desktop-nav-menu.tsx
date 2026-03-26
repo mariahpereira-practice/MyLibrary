@@ -15,6 +15,7 @@ export function DesktopNavMenu() {
                 color="inherit"
                 component={RouterLink}
                 to={link.path}
+                sx={{ fontSize: '1.5rem' }}
                 >
                     {link.label}
                 </Button>

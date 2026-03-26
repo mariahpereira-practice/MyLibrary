@@ -38,6 +38,10 @@
             "type": "relation",
             "relation": "oneToMany",
             "target": "api::category.category"
+        },
+        "autor": {
+            "type": "string",
+            "required": true
         }
     }
 }

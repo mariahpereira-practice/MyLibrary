@@ -37,7 +37,7 @@ export function MobileNavMenu() {
                 sx={{display: { xs: 'block', md: 'none' },}}
             >
                 <MenuItem onClick={toggleTheme}>
-                    <Button color="inherit">
+                    <Button color="inherit" sx={{ fontSize: '1.25rem' }}>
                         {mode === 'light' ? 'Ativar modo escuro' : 'Ativar modo claro'}
                     </Button>
                 </MenuItem>
@@ -47,7 +47,8 @@ export function MobileNavMenu() {
                         onClick={closeMobileMenu}>
                             <Button color="inherit" 
                             component={RouterLink} 
-                            to={link.path}>
+                            to={link.path}
+                            sx={{ fontSize: '1.25rem' }}>
                                 {link.label}
                             </Button>
                     </MenuItem>

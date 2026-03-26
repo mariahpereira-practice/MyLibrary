@@ -4,8 +4,8 @@ import { keyframes } from "@emotion/react";
 
 export function CatPawPrint() {
 
-    const paw1 = { mr: '180px', transform: 'rotate(-270deg)' }
-    const paw2 = { mr: '150px', transform: 'rotate(180deg)' }
+    const paw1 = { mr: { sm: '40px', md: '180px' }, transform: 'rotate(-270deg)' }
+    const paw2 = { mr: { sm: '20px', md: '150px' }, transform: 'rotate(180deg)' }
 
     const pawSteps = [
         { ...paw1 },

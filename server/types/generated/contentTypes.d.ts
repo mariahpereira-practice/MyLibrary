@@ -502,6 +502,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    autor: Schema.Attribute.String & Schema.Attribute.Required;
     categorias: Schema.Attribute.Relation<
       'oneToMany',
       'api::category.category'
