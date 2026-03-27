@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material";
 import { BookList } from "../components/BookList";
 import type { ResponseBooks } from "../types";
 import { BookSearchBar } from "../components/BookSearchBar";
+import { useDebounce } from "../hooks/useDebounce";
 
 const MINUTES_30 = 30 * 60 * 1000;
 
@@ -13,17 +14,20 @@ export function Books() {
      const [page, setPage] = useState<number>(1);
      const pageSize = 4;
 
+     const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
      useEffect(() => {
         setPage(1);
-     }, [searchTerm]);
+     }, [debouncedSearchTerm]);
+
 
      const { data, isLoading, isError} = useQuery<ResponseBooks>({
-        queryKey: ['products', page, searchTerm],
+        queryKey: ['products', page, debouncedSearchTerm],
         queryFn: async () => {
             let url = `/products?populate=image&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
-            if (searchTerm) {
-                url += `&filters[$or][0][title][$containsi]=${searchTerm}`;
-                url += `&filters[$or][1][autor][$containsi]=${searchTerm}`;
+            if (debouncedSearchTerm) {
+                url += `&filters[$or][0][title][$containsi]=${debouncedSearchTerm}`;
+                url += `&filters[$or][1][autor][$containsi]=${debouncedSearchTerm}`;
             }
             const { data } = await api.get(url);
             return data;
@@ -44,7 +48,7 @@ export function Books() {
                 </Typography>
 
                 <BookSearchBar value={searchTerm} onChange={setSearchTerm} />
-                <BookList data={data} isLoading={isLoading} isError={isError} page={page} setPage={setPage} searchText={searchTerm} totalPage={pageSize}/>
+                <BookList data={data} isLoading={isLoading} isError={isError} page={page} setPage={setPage} searchText={debouncedSearchTerm} totalPage={pageSize}/>
             </Box>
 
         );
