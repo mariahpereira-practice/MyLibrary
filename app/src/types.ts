@@ -4,6 +4,7 @@ export interface Book {
     title: string;
     description: string;
     price: number;
+    stock: number;
     image?: {
         url: string;
     };
@@ -32,6 +33,11 @@ export interface BookListProps {
     totalPage?: number;
 };
 
-export interface CardBookProps {
+export interface ResponseSingleBook {
     data: Book;
-};
+}
+
+export interface BookInfoProps {
+    book: Book;
+    onAddToCart?: () => void;
+}

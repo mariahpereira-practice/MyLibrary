@@ -6,8 +6,7 @@ import { BookList } from "../components/BookList";
 import type { ResponseBooks } from "../types";
 import { BookSearchBar } from "../components/BookSearchBar";
 import { useDebounce } from "../hooks/useDebounce";
-
-const MINUTES_30 = 30 * 60 * 1000;
+import { MINUTES_30 } from "../constants";
 
 export function Books() {
      const [searchTerm, setSearchTerm] = useState<string>("");
