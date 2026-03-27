@@ -41,3 +41,15 @@ export interface BookInfoProps {
     book: Book;
     onAddToCart?: () => void;
 }
+
+export interface AuthResponse {
+    jwt: string;
+    user: User;
+}
+
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    confirmed: boolean;
+}

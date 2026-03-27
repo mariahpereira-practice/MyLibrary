@@ -1,10 +1,44 @@
 import { Alert, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { CatPawPrint } from "../components/CatPawPrint";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "../services/api";
+import { toast } from "react-toastify";
+import type { AuthResponse } from "../types";
+import { useNavigate } from "react-router";
 
 export function Register() {
 
     const isError = false;
-    const isPending = false;
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
+
+    const registerMutation = useMutation({
+        mutationFn: async () => {
+            const response = await api.post<AuthResponse>("/auth/local/register", {
+                username,
+                email,
+                password
+            });
+            return response.data;
+        },
+        onSuccess: (data) => { 
+            // dispatch(setCredentials({user: data.user, token: data.jwt}));
+            toast.success("Cadastro realizado com sucesso!");
+            navigate("/");
+        },
+        onError: (error) => {
+            toast.error("Erro ao registrar a conta. Verifique os dados e tente novamente.");
+        }
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        registerMutation.mutate();
+    }
 
     return (
         <Box>
@@ -46,15 +80,15 @@ export function Register() {
                 </Alert>
                 )}
 
-                <Box component="form" sx={{ mt: 1 }}>
+                <Box component="form" sx={{ mt: 1 }} onSubmit={handleSubmit}>
                     <TextField
                         margin="normal"
                         required
                         fullWidth
                         label="Nome de Usuário"
                         autoFocus
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     ></TextField>
                     <TextField
                         margin="normal"
@@ -62,8 +96,8 @@ export function Register() {
                         fullWidth
                         label="Email"
                         type="email"
-                        // value={email}
-                        // onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     ></TextField>
                     <TextField
                         margin="normal"
@@ -71,17 +105,17 @@ export function Register() {
                         fullWidth
                         label="Senha"
                         type="password"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     ></TextField>
                     <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    disabled={isPending}
+                    disabled={registerMutation.isPending}
                     >
-                    {isPending ? "Registrando..." : "Registrar"}
+                    {registerMutation.isPending ? "Registrando..." : "Registrar"}
                     </Button>
                 </Box>
             </Paper>

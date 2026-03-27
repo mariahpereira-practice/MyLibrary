@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router";
 
 export function UserAuthenticationActions() {
 
-    const isAuthenticated = true;
+    const isAuthenticated = false;
     const userName = "Heloisa";
     
     if(isAuthenticated) {
