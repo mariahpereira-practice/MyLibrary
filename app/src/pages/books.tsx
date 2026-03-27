@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../services/api";
-import { Box } from "@mui/material";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { Box, Typography } from "@mui/material";
 import { BookList } from "../components/BookList";
-import type { Book, ResponseBooks } from "../types";
+import type { ResponseBooks } from "../types";
+import { BookSearchBar } from "../components/BookSearchBar";
+
+const MINUTES_30 = 30 * 60 * 1000;
 
 export function Books() {
      const [searchTerm, setSearchTerm] = useState<string>("");
      const [page, setPage] = useState<number>(1);
-     const pageSize = 6;
+     const pageSize = 4;
+
+     useEffect(() => {
+        setPage(1);
+     }, [searchTerm]);
 
      const { data, isLoading, isError} = useQuery<ResponseBooks>({
         queryKey: ['products', page, searchTerm],
@@ -18,34 +23,30 @@ export function Books() {
             let url = `/products?populate=image&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
             if (searchTerm) {
                 url += `&filters[$or][0][title][$containsi]=${searchTerm}`;
-                url += `&filters[$or][1][description][$containsi]=${searchTerm}`;
+                url += `&filters[$or][1][autor][$containsi]=${searchTerm}`;
             }
             const { data } = await api.get(url);
             return data;
         },
-        staleTime: 30 * 1000,
+        staleTime: MINUTES_30,
          placeholderData: (previousData) => previousData
      });
 
-    const verificarSeEstaLogado = () => {
-        return false;
-    }
-
-    const navigate = useNavigate();
-
-    const adicionarAoCarrinho = (book: Book) => {
-        if (!verificarSeEstaLogado()) {
-            toast.warning("Você precisa fazer o login para adicionar este item ao seu carrinho.", {toastId: "auth-warning"});
-            return;
-        }
-        toast.success(`Livro "${book.title}" adicionado ao carrinho!`, {toastId: "cart-success"});
-        navigate("/cart");
-
-    }
-    
     const mostrarCarregandoOuErro = () => {
         return (
-            <BookList data={data} isLoading={isLoading} isError={isError} page={page} setPage={setPage} debounceSearch={searchTerm} />
+            <Box>
+                <Typography
+                variant="h4"
+                sx={{
+                    fontWeight: 700, mb: 4, color: "primary.main"}}
+                >
+                    Nossos Livros
+                </Typography>
+
+                <BookSearchBar value={searchTerm} onChange={setSearchTerm} />
+                <BookList data={data} isLoading={isLoading} isError={isError} page={page} setPage={setPage} searchText={searchTerm} totalPage={pageSize}/>
+            </Box>
+
         );
 
     };

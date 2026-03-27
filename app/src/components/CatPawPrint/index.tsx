@@ -33,7 +33,7 @@ export function CatPawPrint() {
                     position: 'absolute',
                     bottom: 20,
                     right: 30,
-                    display: 'flex',
+                    display: { xs: 'none', md: 'flex' },
                     flexDirection: 'column',
                     alignItems: 'flex-end',
                     gap: 2,

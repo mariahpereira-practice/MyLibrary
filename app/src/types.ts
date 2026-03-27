@@ -26,7 +26,7 @@ export interface BookListProps {
     data?: ResponseBooks;
     isLoading: boolean;
     isError: boolean;
-    debounceSearch: string;
+    searchText: string;
     page: number;
     setPage: (page: number) => void;
     totalPage?: number;

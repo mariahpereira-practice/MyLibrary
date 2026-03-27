@@ -12,7 +12,8 @@ function BrandLogo() {
         display: 'flex',
         alignItems: 'center',
         gap: 1,
-        flexGrow: {xs: 1, md: 0},
+        whiteSpace: "nowrap",
+        flexGrow: {xs: 1, md: 0, lg: 0},
         mr: {md: 4}
     }}>
     <Book size={25}/>

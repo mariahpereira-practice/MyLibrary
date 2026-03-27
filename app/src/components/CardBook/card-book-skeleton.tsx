@@ -8,7 +8,7 @@ export function CardBookSkeleton() {
             flexDirection: "column",
             zIndex: 1
         }}>
-            <Skeleton variant="rectangular" height={400} animation="wave"/>
+            <Skeleton variant="rectangular" height={250} animation="wave"/>
 
             <CardContent sx={{
                 flexGrow: 1,

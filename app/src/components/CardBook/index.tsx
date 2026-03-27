@@ -19,7 +19,7 @@ export function CardBook({ data }: Readonly<CardBookProps>) {
         }}>
             <CardMedia 
             component="img"
-            height="400"
+            height="250"
             image={imageUrl}
             alt={title}
             sx={{
