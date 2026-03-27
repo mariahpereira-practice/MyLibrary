@@ -1,33 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "../services/api";
-import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { CardBook } from "../components/CardBook";
-
-interface Book {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    image?: {
-        url: string;
-    };
-    autor: string;
-};
-
-interface ResponseBooks {
-    data: Book[];
-    meta: {
-        pagination: {
-            page: number;
-            pageSize: number;
-            pageCount: number;
-            total: number;
-        }
-    }
-}
+import { BookList } from "../components/BookList";
+import type { Book, ResponseBooks } from "../types";
 
 export function Books() {
      const [searchTerm, setSearchTerm] = useState<string>("");
@@ -45,8 +23,8 @@ export function Books() {
             const { data } = await api.get(url);
             return data;
         },
-        staleTime: 5 * 1000,
-         //placeholderData: (previousData) => previousData
+        staleTime: 30 * 1000,
+         placeholderData: (previousData) => previousData
      });
 
     const verificarSeEstaLogado = () => {
@@ -66,48 +44,8 @@ export function Books() {
     }
     
     const mostrarCarregandoOuErro = () => {
-        if (isLoading) {
-            return (
-                <Box display="flex" justifyContent="center" py={10}>
-                    <CircularProgress />
-                </Box>
-            );
-        }
-        
-        if (isError) {
-            return (
-                <Typography color="error" align="center">
-                    Erro ao carregar os livros.
-                </Typography>
-            );
-        }
-        
         return (
-            <Box>
-                {data?.data.length === 0 ? (
-                    <Typography align="center">
-                        Nenhum livro encontrado.
-                    </Typography>
-                ) : (
-                    <Box>
-                        <Paper elevation={0} sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: 3,
-                            justifyContent: 'center',
-                            p: 3,
-                            mt: 2,
-                            mb: 4,
-                        }}>
-                        {data?.data.map((book) => {
-                            return (
-                                <CardBook key={book.id} data={book} adicionarAoCarrinho={() => adicionarAoCarrinho(book)} />
-                            )})};
-                        </Paper>
-                        
-                    </Box>
-                )}
-            </Box>
+            <BookList data={data} isLoading={isLoading} isError={isError} page={page} setPage={setPage} debounceSearch={searchTerm} />
         );
 
     };
