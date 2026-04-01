@@ -16,10 +16,11 @@ export const Routers = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/books/:id" element={<BookDetails />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/cart" element={<>Meu Carrinho</>} />
+                </Route>
             </Route>
-            <Route element={<ProtectedRoute />}>
-                <Route path="/cart" element={<>Meu Carrinho</>} />
-            </Route>
+            
             
         </Routes>
     )

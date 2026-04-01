@@ -1,7 +1,52 @@
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { CatPawPrint } from "../components/CatPawPrint";
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "../store";
+import { useCallback, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "../services/api";
+import { type AuthResponse } from "../types";
+import { setCredentials } from "../store/slices/auth-slice";
+import { toast } from "react-toastify";
 
 export function Login() {
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const [identifier, setIdentifier] = useState('');
+    const [password, setPassword] = useState('');
+
+    const loginMutation = useMutation({
+        mutationFn: async () => {
+            const response = await api.post<AuthResponse>('/auth/local', {
+                identifier,
+                password
+            });
+            return response.data;
+        },
+        onSuccess: (data) => {
+            dispatch(setCredentials({
+                user: data.user,
+                token: data.jwt
+            }));
+            toast.success(`Bem vindo(a) de volta, ${data.user.username}!`);
+            navigate('/');
+        },
+        onError: () => {
+            toast.error('Credenciais inválidas. Tente novamente.');
+        }
+    });
+
+    const handleSubmit = useCallback((e: React.FormEvent) => {
+        e.preventDefault();
+        if (!identifier || !password) {
+            toast.error('Por favor, preencha todos os campos.');
+            return;
+        }
+        loginMutation.mutate();
+    }, [identifier, password]);
+
   return (
     <Box>
         <CatPawPrint />
@@ -37,7 +82,7 @@ export function Login() {
                 >
                     Acessar Conta
                 </Typography>
-                <Box component="form" onSubmit={() => {console.log('Login feito.')}}>
+                <Box component="form" onSubmit={handleSubmit}>
                     <TextField
                     margin="normal"
                     required
@@ -45,8 +90,8 @@ export function Login() {
                     label="Email ou Nome de Usuário"
                     autoComplete="email"
                     autoFocus
-                    //value={identifier}
-                    //onChange={(e) => setIdentifier(e.target.value)}
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
                     >
                     </TextField>
                     <TextField
@@ -56,8 +101,8 @@ export function Login() {
                     label="Senha"
                     type="password"
                     autoComplete="current-password"
-                    //value={password}
-                    //onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     >
                     </TextField>
                     <Button
@@ -69,10 +114,9 @@ export function Login() {
                         py: 1.2,
                         mb: 2
                     }}
-                    // disabled={loginMutation.isPending}
+                    disabled={loginMutation.isPending}
                     >
-                       {/* {loginMutation.isPending ? 'Entrando...' : 'Entrar'} */}
-                       Entrar
+                       {loginMutation.isPending ? 'Entrando...' : 'Entrar'}
                     </Button>
                 </Box>
             </Paper>

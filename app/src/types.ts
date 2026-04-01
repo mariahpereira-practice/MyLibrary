@@ -51,5 +51,19 @@ export interface User {
     id: number;
     username: string;
     email: string;
-    confirmed: boolean;
+}
+
+export interface CartItem {
+    id: number;
+    documentId: string;
+    quantity: number;
+    book: {
+        id: number;
+        documentId: string;
+        title: string;
+        price: number;
+        image?: {
+            url: string;
+        };
+    }
 }

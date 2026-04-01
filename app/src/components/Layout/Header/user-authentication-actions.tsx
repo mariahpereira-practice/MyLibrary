@@ -1,14 +1,26 @@
 import { Box, Button, Typography } from "@mui/material";
-import { Link as RouterLink } from "react-router";
+import { useSelector } from "react-redux";
+import { Link as RouterLink, useNavigate } from "react-router";
+import { useAppDispatch, type RootState } from "../../../store";
+import { selectAuth } from "../../../store/slices/auth-slice";
+import { logout } from '../../../store/actions/logout';
+import { useCallback } from "react";
 
 export function UserAuthenticationActions() {
 
-    const isAuthenticated = false;
-    const userName = "Heloisa";
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const {isAuthenticated, user} = useSelector(selectAuth);
+
+    const handleUserLogout = useCallback(() => {
+        dispatch(logout());
+        navigate('/login');
+    }, [dispatch, navigate]);
     
     if(isAuthenticated) {
         return (
-            <Box sx={{display:'flex', gap: 1, ml: 2, 
+            <Box sx={{display:'flex', gap: 2, ml: 2, 
             flexDirection: {xs: 'column', md: 'row'}, 
             alignItems: {xs: 'stretch', md: 'center'},
             mt:{xs: 1, md: 0},
@@ -16,14 +28,14 @@ export function UserAuthenticationActions() {
                 <Typography variant="body2"
                 sx={{display: {xs: 'none', md: 'block'},
                 fontSize: {xs: '0.875rem', md: '1rem'}}}
-                    > Olá, <strong>{userName}</strong>!
+                    > Olá, <strong>{user?.username}</strong>!
                 </Typography>
                 <Button 
                 color="secondary" 
                 variant="contained" 
                 size="small" 
                 onClick={()=>{
-                        console.log("Usuário deslogado");
+                        handleUserLogout();
                 }}>Sair
                 </Button>
             </Box>

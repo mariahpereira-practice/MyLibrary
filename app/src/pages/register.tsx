@@ -6,8 +6,12 @@ import { api } from "../services/api";
 import { toast } from "react-toastify";
 import type { AuthResponse } from "../types";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../store";
+import { setCredentials } from "../store/slices/auth-slice";
 
 export function Register() {
+
+    const dispatch = useAppDispatch();
 
     const isError = false;
     const [username, setUsername] = useState("");
@@ -26,7 +30,7 @@ export function Register() {
             return response.data;
         },
         onSuccess: (data) => { 
-            // dispatch(setCredentials({user: data.user, token: data.jwt}));
+            dispatch(setCredentials({user: data.user, token: data.jwt}));
             toast.success("Cadastro realizado com sucesso!");
             navigate("/");
         },

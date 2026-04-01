@@ -1,9 +1,13 @@
 import { Navigate, Outlet, useLocation } from "react-router"
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../store/slices/auth-slice";
+import { Layout } from "../components/Layout";
 
 export const ProtectedRoute = () => {
 
-    const isAuthenticated = false;
+    const {isAuthenticated} = useSelector(selectAuth);
+
     const location = useLocation();
 
     if(!isAuthenticated){
@@ -13,6 +17,6 @@ export const ProtectedRoute = () => {
     }
 
     return (
-       <Outlet></Outlet>
+          <Outlet></Outlet>
     )
 }
