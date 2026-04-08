@@ -6,6 +6,7 @@ import { Register } from '../pages/register'
 import { Login } from '../pages/login'
 import { Books } from '../pages/books'
 import { BookDetails } from '../pages/book-details'
+import { CartPage } from '../pages/cart-page'
 
 export const Routers = () => {
     return (
@@ -17,7 +18,7 @@ export const Routers = () => {
                 <Route path="/books" element={<Books />} />
                 <Route path="/books/:id" element={<BookDetails />} />
                 <Route element={<ProtectedRoute />}>
-                    <Route path="/cart" element={<>Meu Carrinho</>} />
+                    <Route path="/cart" element={<CartPage/>} />
                 </Route>
             </Route>
             

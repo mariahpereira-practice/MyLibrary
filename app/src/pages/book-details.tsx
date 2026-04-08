@@ -9,12 +9,20 @@ import { BookInfo } from "../components/BookInfo";
 import { BookInfoSkeleton } from "../components/BookInfo/book-info-skeleton";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { ArrowLeft } from "lucide-react";
+import { useAppDispatch } from "../store";
+import { addCartItem } from "../store/slices/cart-slice";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../store/slices/auth-slice";
 
 export function BookDetails() {
 
     const { id } = useParams<{ id: string }>();
 
+    const dispatch = useAppDispatch();
+
     const navigate = useNavigate();
+
+    const {isAuthenticated} = useSelector(selectAuth);
 
     const {data: book, isLoading, isError} = useQuery<ResponseSingleBook>({
         queryKey: ['book', id],
@@ -26,9 +34,19 @@ export function BookDetails() {
         staleTime: MINUTES_30
     });
 
-    const handleAddToCart = useCallback(() => {
-        toast.success(`${book?.data.title} adicionado ao carrinho!`);
-    }, [book]);
+    const handleAddToCart = useCallback(async () => {
+        if (!book?.data) return;
+        if( !isAuthenticated) {
+            toast.error("Faça login para adicionar o item ao carrinho.");
+            return navigate("/login");
+        }
+        try {
+            await dispatch(addCartItem(book.data)).unwrap();
+            toast.success(`${book?.data.title} adicionado ao carrinho!`);
+        } catch {
+            toast.error("Não foi possível adicionar o item ao carrinho, tente novamente.")
+        }
+    }, [book, dispatch, toast, isAuthenticated]);
 
     if (isLoading) {
         return <Paper elevation={0} sx={{
@@ -53,8 +71,7 @@ export function BookDetails() {
                 </Button>
             </Box>
         )
-    }
-    
+    }   
 
     return (
         <Paper elevation={0} sx={{
@@ -62,7 +79,8 @@ export function BookDetails() {
                 backgroundColor: "background.paper",
                 borderRadius: 3,
             }}
-        > <BookInfo book={book.data} onAddToCart={handleAddToCart} />
+        >
+        <BookInfo book={book.data} onAddToCart={handleAddToCart} />
         </Paper>
     );
 }

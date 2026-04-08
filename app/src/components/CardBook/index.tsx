@@ -2,12 +2,12 @@ import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/mate
 import type { Book } from "../../types";
 import { useNavigate } from "react-router";
 import { ShoppingCart } from "lucide-react";
-import { generateImageUrlBook } from "../../utils/generateImageUrlBook";
+import { getImageUrlBook } from "../../utils/generateImageUrlBook";
 
 export function CardBook({ data }: Readonly<{ data: Book }>) {
     const {documentId, title, description, price, image, autor } = data;
     
-    const imageUrl = generateImageUrlBook(image?.url);
+    const imageUrl = getImageUrlBook(image?.url);
 
     const navigate = useNavigate();
 

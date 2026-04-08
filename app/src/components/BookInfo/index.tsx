@@ -1,13 +1,13 @@
-import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import type { BookInfoProps } from "../../types";
 import { ShieldCheck, ShoppingCart, Truck } from "lucide-react";
-import { generateImageUrlBook } from "../../utils/generateImageUrlBook";
+import { getImageUrlBook } from "../../utils/generateImageUrlBook";
 
 export function BookInfo({ book, onAddToCart }: Readonly<BookInfoProps>) {
 
     const { title, description, price, stock, autor } = book;
 
-    const imageUrl = generateImageUrlBook(book.image?.url);
+    const imageUrl = getImageUrlBook(book.image?.url);
 
         return (
         <Grid container spacing={6}>
@@ -66,18 +66,17 @@ export function BookInfo({ book, onAddToCart }: Readonly<BookInfoProps>) {
                         </Box>
                     </Box>
 
-                    <Button variant="contained" size="large" startIcon={<ShoppingCart />} 
-                    onClick={onAddToCart}
-                    sx={{ 
-                        py:2,
-                        fontSize: "1.1rem",
-                        fontWeight: "bold",
-                        textTransform: "uppercase",
-                     }}
-                     fullWidth>
-                        Adicionar ao carrinho
-                    </Button>
-
+                <Button variant="contained" size="large" startIcon={<ShoppingCart />} 
+                                onClick={onAddToCart}
+                                sx={{ 
+                                    py:2,
+                                    fontSize: "1.1rem",
+                                    fontWeight: "bold",
+                                    textTransform: "uppercase",
+                                }}
+                                fullWidth>
+                                    Adicionar ao carrinho
+                </Button>           
                 </Grid>
             </Grid>
         );

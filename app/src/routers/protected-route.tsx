@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../store/slices/auth-slice";
 import { Layout } from "../components/Layout";
+import { useEffect } from "react";
 
 export const ProtectedRoute = () => {
 
@@ -10,9 +11,13 @@ export const ProtectedRoute = () => {
 
     const location = useLocation();
 
+    useEffect(() => {
+        if(!isAuthenticated) {
+            toast.warning("Você precisa fazer o login", {toastId: "auth-warning"});
+        }    
+    },[isAuthenticated]);
+
     if(!isAuthenticated){
-        toast.warning("Você precisa fazer o login", {toastId: "auth-warning"});
-        
         return <Navigate to="/login" replace state={{from: location}}></Navigate>
     }
 
