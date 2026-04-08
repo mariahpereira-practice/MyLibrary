@@ -44,6 +44,9 @@ export function Login() {
             toast.error('Por favor, preencha todos os campos.');
             return;
         }
+        // imprimir variáveis de estado no escopo (para auditoria / depuração) - - resposta a pergunta 
+       // O aluno fez a impressão das variáveis de estado no escopo?
+        console.log('Login state:', { identifier, passwordLength: password.length });
         loginMutation.mutate();
     }, [identifier, password]);
 
