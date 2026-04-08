@@ -41,9 +41,17 @@ export function BookDetails() {
             return navigate("/login");
         }
         try {
-            await dispatch(addCartItem(book.data)).unwrap();
-            toast.success(`${book?.data.title} adicionado ao carrinho!`);
-        } catch {
+            const actionResult = await dispatch(addCartItem(book.data));
+            if (addCartItem.fulfilled.match(actionResult)) {
+                toast.success(`${book?.data.title} adicionado ao carrinho!`);
+            } else if (addCartItem.rejected.match(actionResult)) {
+                const message = (actionResult.payload as string) ?? actionResult.error?.message ?? "Não foi possível adicionar o item ao carrinho.";
+                toast.error(message);
+            } else {
+                toast.error("Não foi possível adicionar o item ao carrinho, tente novamente.");
+            }
+        } catch (err) {
+            console.error("BookDetails: unexpected error when adding to cart", err);
             toast.error("Não foi possível adicionar o item ao carrinho, tente novamente.")
         }
     }, [book, dispatch, toast, isAuthenticated]);

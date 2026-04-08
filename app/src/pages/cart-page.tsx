@@ -1,9 +1,9 @@
 import { Alert, Box, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { fetchCartItems, selectCart } from "../store/slices/cart-slice";
+import { fetchCartItems, removeCartItem, selectCart, updateCartItem } from "../store/slices/cart-slice";
 import { CartItemSkeleton } from "../components/Cart/cart-item-skeleton";
 import { CartEmpty } from "../components/Cart/cart-empty";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch } from "../store";
 import { CartSummary } from "../components/Cart/cart-summary";
 import { CartItemRow } from "../components/Cart/cart-item-row";
@@ -23,6 +23,14 @@ export function CartPage() {
 
     useEffect(() => {
         dispatch(fetchCartItems());
+    }, [dispatch]);
+
+    const handleUpdateQuantity = useCallback((documentId: string, quantity: number) => {
+        dispatch(updateCartItem({documentId, quantity}))
+    }, [dispatch]);
+
+    const handleRemove = useCallback((documentId: string) => {
+        dispatch(removeCartItem(documentId))
     }, [dispatch]);
 
     const isLoading = status == "loading";
@@ -54,8 +62,8 @@ export function CartPage() {
                     {itens.map((item: any) => 
                         <CartItemRow key={item.id} item={item} 
                         isProcessing={processingItemIds.includes(item.documentId)}
-                        onRemove={() => {}}
-                        onUpdateQuantity={() => {}}
+                        onRemove={handleRemove}
+                        onUpdateQuantity={handleUpdateQuantity}
                          />
                     )}
                 </Grid>

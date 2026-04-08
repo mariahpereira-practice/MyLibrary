@@ -8,7 +8,7 @@ function normalizeCartItem(raw: any): CartItem {
     const id = raw.id;
     const documentId = raw.documentId;
     const quantity = raw.quantity;
-    const book = raw.product as Book;
+    const book = (raw.book ?? raw.product) as Book;
 
     return {
         id,
@@ -84,11 +84,11 @@ export const addCartItem = createAsyncThunk(
             );
             const existingItem = existing.data[0] ?? null;
             if(existingItem) {
-                await dispatch(updateCartItem({
+                const updated = await dispatch(updateCartItem({
                     documentId: existingItem.documentId,
                     quantity: existingItem.quantity + 1,
-                }));
-                return null;
+                })).unwrap();
+                return updated;
             }
 
             const { data } = await api.post("/cart-itens", {
@@ -149,8 +149,18 @@ const cartSlice = createSlice({
         });
 
         builder.addCase(addCartItem.fulfilled, (state, action) => {
-            if (action.payload) {
-                state.itens.push(normalizeCartItem(action.payload));
+            const raw = action.payload as any;
+            if (raw) {
+                const existingIndex = state.itens.findIndex((it) => it.documentId === raw.documentId);
+                if (existingIndex >= 0) {
+                    state.itens[existingIndex].quantity = raw.quantity ?? state.itens[existingIndex].quantity;
+                    if (raw.book || raw.product) {
+                        state.itens[existingIndex] = normalizeCartItem(raw);
+                    }
+                } else {
+                    state.itens.push(normalizeCartItem(raw));
+                }
+
                 const totals = calculateTotals(state.itens);
                 state.totalAmount = totals.totalAmount;
                 state.totalQuantity = totals.totalQuantity;
@@ -169,7 +179,13 @@ const cartSlice = createSlice({
                 (item) => item.documentId === action.payload.documentId,
             );
             if(index !== -1) {
-                state.itens[index] = normalizeCartItem(action.payload);
+                const raw = action.payload as any;
+                const hasProduct = Boolean(raw?.book);
+                if (hasProduct) {
+                    state.itens[index] = normalizeCartItem(raw);
+                } else {
+                    state.itens[index].quantity = raw.quantity ?? state.itens[index].quantity;
+                }
             }
             const totals = calculateTotals(state.itens);
             state.totalAmount = totals.totalAmount;
