@@ -1,0 +1,11 @@
+POST http://localhost:3333/addOrder
+content-type: application/json
+
+{
+    "user_id": 2,
+    "product": "Sample Product",
+    "amount": 3
+}
+
+###
+GET http://localhost:3333/orders
