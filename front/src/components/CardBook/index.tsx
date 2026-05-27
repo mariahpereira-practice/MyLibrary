@@ -6,8 +6,8 @@ import { getImageUrlBook } from "../../utils/generateImageUrlBook";
 
 export function CardBook({ data }: Readonly<{ data: Book }>) {
     const {documentId, title, description, price, image, autor } = data;
-    
-    const imageUrl = getImageUrlBook(image?.url);
+
+    const imageUrl = getImageUrlBook(image);
 
     const navigate = useNavigate();
 

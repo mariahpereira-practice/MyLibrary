@@ -5,9 +5,9 @@ import { getImageUrlBook } from "../../utils/generateImageUrlBook";
 
 export function BookInfo({ book, onAddToCart }: Readonly<BookInfoProps>) {
 
-    const { title, description, price, stock, autor } = book;
+    const { title, description, price, image, stock, autor } = book;
 
-    const imageUrl = getImageUrlBook(book.image?.url);
+    const imageUrl = getImageUrlBook(image);
 
         return (
         <Grid container spacing={6}>

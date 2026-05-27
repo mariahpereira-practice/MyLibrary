@@ -1,11 +1,59 @@
-POST http://localhost:3333/addOrder
-content-type: application/json
+### Produtos - listar
+GET http://localhost:1337/api/products?page=1&pageSize=4
+
+### Produto - listar por termo
+
+GET http://localhost:1337/api/products?page=1&pageSize=4&filters[$or][0][title][$containsi]=Impostora
+### Produto - detalhe
+GET http://localhost:1337/api/products/1
+
+### Auth - login
+POST http://localhost:1337/api/auth/local
+Content-Type: application/json
 
 {
-    "user_id": 2,
-    "product": "Sample Product",
-    "amount": 3
+  "identifier": "visao@email.com",
+  "password": "senha123"
 }
 
-###
-GET http://localhost:3333/orders
+### Auth - registro
+POST http://localhost:1337/api/auth/local/register
+Content-Type: application/json
+
+{
+  "username": "visao",
+  "email": "visao@email.com",
+  "password": "senha123"
+}
+
+### Carrinho - listar itens
+GET http://localhost:1337/api/cart-itens
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ2aXNhb0BlbWFpbC5jb20iLCJpYXQiOjE3Nzk4OTg3NDUsImV4cCI6MTc4MDUwMzU0NX0._3SePlopoSgYfINr8x73dBrvDRwemHDVH4cUmikqkB8
+
+### Carrinho - adicionar item
+POST http://localhost:1337/api/cart-itens
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ2aXNhb0BlbWFpbC5jb20iLCJpYXQiOjE3Nzk4OTg3NDUsImV4cCI6MTc4MDUwMzU0NX0._3SePlopoSgYfINr8x73dBrvDRwemHDVH4cUmikqkB8
+Content-Type: application/json
+
+{
+  "data": {
+    "product": 3,
+    "quantity": 1
+  }
+}
+
+### Carrinho - atualizar quantidade
+PUT http://localhost:1337/api/cart-itens/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ2aXNhb0BlbWFpbC5jb20iLCJpYXQiOjE3Nzk4OTg3NDUsImV4cCI6MTc4MDUwMzU0NX0._3SePlopoSgYfINr8x73dBrvDRwemHDVH4cUmikqkB8
+Content-Type: application/json
+
+{
+  "data": {
+    "quantity": 3
+  }
+}
+
+### Carrinho - remover item
+DELETE http://localhost:1337/api/cart-itens/1
+Authorization: Bearer SEU_TOKEN_JWT
+

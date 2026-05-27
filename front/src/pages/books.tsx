@@ -19,12 +19,9 @@ export function Books() {
         setPage(1);
      }, [debouncedSearchTerm]);
 
-      // imprimir variáveis de estado relacionadas à busca/paginação - resposta a pergunta 
-      //O aluno fez a impressão das variáveis de estado no escopo?
       useEffect(() => {
           console.log('Books state:', { searchTerm, debouncedSearchTerm, page });
       }, [searchTerm, debouncedSearchTerm, page]);
-
 
      const { data, isLoading, isError} = useQuery<ResponseBooks>({
         queryKey: ['products', page, debouncedSearchTerm],

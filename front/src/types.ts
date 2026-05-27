@@ -1,3 +1,7 @@
+export interface BookImage {
+    url?: string;
+}
+
 export interface Book {
     id: number;
     documentId: string;
@@ -5,9 +9,8 @@ export interface Book {
     description: string;
     price: number;
     stock: number;
-    image?: {
-        url: string;
-    };
+    image?: string | BookImage;
+    image_url?: string;
     autor: string;
 };
 
@@ -62,9 +65,8 @@ export interface CartItem {
         documentId: string;
         title: string;
         price: number;
-        image?: {
-            url: string;
-        };
+        image?: string | BookImage;
+        image_url?: string;
     }
 }
 
