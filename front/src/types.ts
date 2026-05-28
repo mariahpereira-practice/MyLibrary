@@ -73,3 +73,18 @@ export interface CartItem {
 export interface ResponseCartItems {
     data: CartItem[];
 }
+
+export interface ProdutoComprado {
+    id: number;
+    documentId: string;
+    book: {
+        id: number;
+        documentId: string;
+        title: string;
+        price: number;
+        image?: string | BookImage;
+        image_url?: string;
+    }
+}
+
+

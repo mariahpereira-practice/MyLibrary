@@ -7,6 +7,7 @@ import { Login } from '../pages/login'
 import { Books } from '../pages/books'
 import { BookDetails } from '../pages/book-details'
 import { CartPage } from '../pages/cart-page'
+import { LivrosComprados } from '../pages/livros-comprados'
 
 export const Routers = () => {
     return (
@@ -19,6 +20,9 @@ export const Routers = () => {
                 <Route path="/books/:id" element={<BookDetails />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/cart" element={<CartPage/>} />
+                </Route>
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/livros-comprados" element={<LivrosComprados/>} />
                 </Route>
             </Route>
             

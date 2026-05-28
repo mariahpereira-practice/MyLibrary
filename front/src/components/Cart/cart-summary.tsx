@@ -3,10 +3,11 @@ import { Box, Button, Divider, Paper, Typography } from "@mui/material";
 interface CartSummaryProps {
     totalAmount: number;
     totalQuantity: number;
+    handleComprar: () => void;
 }
 
 export function CartSummary ({
-    totalAmount, totalQuantity
+    totalAmount, totalQuantity, handleComprar
 }: CartSummaryProps) {
     return (
     <Paper variant="outlined" sx={{px: 3, mb: 4, py: 2}}>
@@ -31,7 +32,9 @@ export function CartSummary ({
             </Typography>
        </Box>
 
-       <Button variant="contained" fullWidth size="large" disabled>
+       <Button variant="contained" fullWidth size="large"
+        onClick={() => handleComprar()}
+       >
             Finalizar Compra
        </Button>
     </Paper>

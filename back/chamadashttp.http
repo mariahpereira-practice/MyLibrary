@@ -57,3 +57,17 @@ Content-Type: application/json
 DELETE http://localhost:1337/api/cart-itens/1
 Authorization: Bearer SEU_TOKEN_JWT
 
+### Comprados - listar itens
+GET http://localhost:1337/api/comprados
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ2aXNhb0BlbWFpbC5jb20iLCJpYXQiOjE3Nzk5ODQyNDUsImV4cCI6MTc4MDU4OTA0NX0.pWqb07BLLmQopMlOi2zifci8bfuny1iGCFywGKfdnZc
+
+### Comprados - adicionar item
+POST http://localhost:1337/api/comprados
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ2aXNhb0BlbWFpbC5jb20iLCJpYXQiOjE3Nzk5ODQyNDUsImV4cCI6MTc4MDU4OTA0NX0.pWqb07BLLmQopMlOi2zifci8bfuny1iGCFywGKfdnZc
+Content-Type: application/json
+
+{
+  "data": {
+    "productsIds": [2]
+  }
+}

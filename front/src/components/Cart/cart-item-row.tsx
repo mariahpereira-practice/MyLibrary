@@ -19,7 +19,7 @@ export function CartItemRow({
     onUpdateQuantity
 }: CartItemRowProps) {
     const { documentId, quantity, book } = item;
-    const imageUrl = getImageUrlBook(book.image?.url);
+    const imageUrl = getImageUrlBook(book.image);
     const subtotal = book.price * quantity;
     
     const handleIncrement = useCallback(() => {

@@ -7,6 +7,10 @@ import { useCallback, useEffect } from "react";
 import { useAppDispatch } from "../store";
 import { CartSummary } from "../components/Cart/cart-summary";
 import { CartItemRow } from "../components/Cart/cart-item-row";
+import type { CartItem } from "../types";
+import { useNavigate } from "react-router";
+import { api } from "../services/api";
+import { toast } from "react-toastify";
 
 export function CartPage() {
 
@@ -20,6 +24,29 @@ export function CartPage() {
     } = useSelector(selectCart);
 
     const dispatch = useAppDispatch();
+
+    const productsIds = itens.map((item: CartItem) => item.book.id);
+
+    const handleComprar = useCallback(async () => {
+            if (totalAmount == 0) return;
+            try {
+                const actionResult = await api.post("/comprados", {
+                        data: {
+                            productsIds: productsIds
+                        }
+                    });
+                if (actionResult.status !==400) {
+                    toast.success(`Itens comprados com sucesso!`);
+                    itens.forEach((item: CartItem) => {
+                        handleRemove(item.documentId);
+                    });
+                } else {
+                    toast.error("Não foi possível adicionar o item ao carrinho, tente novamente.");
+                }
+            } catch (err) {
+                toast.error("Não foi possível realizar a compra, tente novamente.")
+            }
+    }, [totalAmount, productsIds]);
 
     useEffect(() => {
         dispatch(fetchCartItems());
@@ -68,7 +95,7 @@ export function CartPage() {
                     )}
                 </Grid>
                 <Grid size={{xs: 12, md: 4}}>
-                    <CartSummary totalAmount={totalAmount} totalQuantity={totalQuantity}/>
+                    <CartSummary totalAmount={totalAmount} totalQuantity={totalQuantity} handleComprar={handleComprar}/>
                 </Grid>
             </Grid>
         
